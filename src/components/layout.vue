@@ -1,7 +1,7 @@
 <template>
   <div>
-    <nav class="ui inverted attached segment m-padded-tb-mini ">
-      <div class="ui  container ">
+    <nav class="ui inverted attached segment m-padded-tb-mini">
+      <div class="ui container">
         <div class="ui inverted secondary stackable menu" ref="abc">
           <h2 class="ui header white item">X</h2>
           <a v-bind:class="[mitem, item]" v-show="menudisplay==true" @click="gotohome">
@@ -17,7 +17,6 @@
           <a v-bind:class="[mitem, item]" v-show="menudisplay==true" @click="gotoabout">
             <i class="icon info"></i>关于我
           </a>
-          
         </div>
       </div>
 
@@ -46,30 +45,25 @@
       class="particles-js"
     ></vue-particles>
 
-    <router-view>
-      
-    </router-view>
-    
-<footer class="ui inverted attached segment m-padded-tb-mini" >
+    <router-view></router-view>
 
-<p class="text_center">琼ICP备20000806号-1<p>
-
-
-</footer>
-
+    <footer class="ui inverted attached segment m-padded-tb-mini">
+      <p class="text_center">琼ICP备20000806号-1 | 网站已持续运行 {{runningtime}} 天</p>
+      <p></p>
+    </footer>
   </div>
 </template>
 
 <script>
 export default {
- created(){
-  if (this.screenWidth < 768) {
-        this.menudisplay = false;
-      } else if (this.screenWidth > 768) {
-        this.menudisplay = true;
-      }
-   
- },
+  created() {
+    if (this.screenWidth < 768) {
+      this.menudisplay = false;
+    } else if (this.screenWidth > 768) {
+      this.menudisplay = true;
+    }
+    this.getrunningtime()
+  },
   data() {
     return {
       screenWidth: document.body.clientWidth,
@@ -77,7 +71,8 @@ export default {
       mitem: "m-item",
       item: "item",
       right: "right",
-      aligned: "aligned"
+      aligned: "aligned",
+      runningtime:0,
     };
   },
 
@@ -96,6 +91,14 @@ export default {
     },
     gotoabout() {
       this.$router.push("/about");
+    },
+    getrunningtime() {
+      let s1 = "2020-02-17";
+      s1 = new Date(s1.replace(/-/g, "/"));
+      let s2 = new Date(); //当前日期：2017-04-24
+      let days = s2.getTime() - s1.getTime();
+      let time = parseInt(days / (1000 * 60 * 60 * 24));
+      this.runningtime = time
     }
   },
   mounted() {
@@ -114,10 +117,7 @@ export default {
       } else if (val > 768) {
         this.menudisplay = true;
       }
-      
     }
-    
-    
   }
 };
 </script>
@@ -137,6 +137,4 @@ export default {
   position: absolute;
   width: 100%;
 }
-
-
 </style>
